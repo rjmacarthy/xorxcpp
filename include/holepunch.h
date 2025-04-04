@@ -80,6 +80,19 @@ private:
     // Perform connection attempt via TCP hole punching
     bool attemptTCPHolePunch(const NodePtr& target);
     
+    // Perform connection attempt for localhost
+    bool attemptLocalConnection(const std::string& ip, uint16_t port);
+    
+    // Check if the connection is local (localhost or same machine)
+    bool isLocalConnection(const std::string& ip);
+    
+    // Helper method to detect local IP address
+    void detectLocalIP();
+    
+    // Helper method to get public endpoint from a specific STUN server
+    bool getPublicEndpointFromServer(const std::string& stunServer, uint16_t stunPort,
+                                    std::string& ip, uint16_t& port);
+    
     ConnectionInfo connectionInfo_;
     std::unordered_map<NodeID, HolePunchCallback> pendingHolePunches_;
     mutable std::mutex mutex_;
